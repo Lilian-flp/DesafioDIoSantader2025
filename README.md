@@ -8,5 +8,5 @@ Neste Lab, o foco principal é aprender o fluxo ETL (Extração, Transformação
 A ferramenta específica (API, arquivo ou IA) é menos importante do que entender como os dados fluem de uma etapa para a outra.
 
 Desafio 
-Foi utilizado os dados do IBJE dos utimos 4 anos da população por reginaão do Brasil
+Foi utilizado os dados do IBGE dos utimos 4 anos da população por reginaão do Brasil
 
