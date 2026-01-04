@@ -1,4 +1,4 @@
-Enuciando
+
 Entendendo o Desafio
 
 Este é o momento de criar o seu portfólio! O objetivo deste desafio é replicar o projeto prático, explorando os conceitos de Ciência de Dados e Python. 
