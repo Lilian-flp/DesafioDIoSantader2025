@@ -1,0 +1,42 @@
+# RELATÓRIO DE IMPLEMENTAÇÃO DE SERVIÇOS AWS
+
+Data: 12/01/2026
+Empresa: Varejo Plus Size
+Responsável: Lilian Floriano 
+
+## Introdução
+Este relatório apresenta o processo de implementação de ferramentas na empresa Varejo Plus Size, realizado por Lilian Floriano. O objetivo do projeto foi elencar 3 serviços AWS, com a finalidade de realizar diminuição de custos imediatos.
+
+## Descrição do Projeto
+O projeto de implementação de ferramentas foi dividido em 3 etapas, cada uma com seus objetivos específicos. A seguir, serão descritas as etapas do projeto:
+
+Etapa 1: 
+Ferramenta: Amazon S3 
+Foco: Para um e-commerce de moda plus size, a experiência visual é o principal argumento de venda. O S3 permite armazenar fotos de altíssima resolução (mostrando texturas de tecidos e caimento) sem sobrecarregar o servidor de aplicação. Ele oferece durabilidade extrema, garantindo que o patrimônio digital da marca (fotos de campanhas e catálogos) esteja sempre seguro.
+Caso de uso:
+Cenário: A equipe de marketing realiza o upload de uma nova coleção. O sistema deve garantir que essas imagens cheguem rapidamente às clientes, mantendo a organização para facilitar a manutenção.
+    1. Estrutura de Baldes (Buckets): Organização por prefixos (pastas virtuais) para separar coleções ativas de itens de outlet, por exemplo: loja-plus-size/colecao-inverno/vestidos/.
+    2. Políticas de Acesso: Uso de Bucket Policies para garantir que as imagens sejam lidas pelo site, mas que o acesso de escrita (upload/exclusão) seja restrito apenas a usuários autenticados da empresa.
+    3. Ciclo de Vida de Dados (Lifecycle): Automação para mover fotos de coleções de anos anteriores para o S3 Glacier ❄️, reduzindo custos de armazenamento em até 90% para arquivos que raramente são acessados, mas que precisam ser guardados por razões fiscais ou de histórico.
+
+Etapa 2: 
+Ferramenta:  AWS Auto Scaling ( conjunto com instâncias EC2).
+Foco: Garante que a aplicação possua o número ideal de instâncias para lidar com a carga de trabalho de forma automática. Ele elimina a necessidade de intervenção manual para ligar ou desligar servidores.
+Caso de Uso:
+Cenário: A loja anuncia uma nova coleção de moda praia plus size através de uma parceria com uma grande influenciadora digital. No momento do post, o site recebe 20 vezes mais acessos do que o normal.
+    1. Deteção: O Amazon CloudWatch monitoriza as instâncias EC2 e deteta que o uso da CPU ultrapassou o limite de 70% devido ao volume de carrinhos de compras abertos.
+    2. Ação de Escalabilidade: O Auto Scaling interpreta essa métrica e, seguindo a política predefinida, lança automaticamente 3 novas instâncias (servidores) para dividir o trabalho.
+    3. Experiência do Cliente: As clientes conseguem navegar pelas texturas e tamanhos das roupas sem que o site apresente erros ou lentidão.
+    4. Otimização de Custos: Assim que o tráfego diminui após o pico inicial, o Auto Scaling encerra as instâncias extras, voltando ao estado mínimo necessário para manter a loja online
+
+Etapa 3: 
+Ferramenta:  Amazon RDS com MYSQL
+Foco: Gerir de forma relacional os dados críticos da loja, como o catálogo de produtos plus size, registos de clientes e o histórico de encomendas. O RDS automatiza tarefas como a aplicação de correções (patches) de segurança e a realização de cópias de segurança (backups).
+Configuração Multi-AZ, que mantém uma réplica síncrona noutra zona de disponibilidade para evitar interrupções no serviço
+Caso de Uso
+Venda Concorrente: Duas clientes tentam comprar a última unidade de uma blusa tamanho G3 simultaneamente. O MySQL utiliza o conceito de transações ACID para garantir que apenas um pedido seja processado com sucesso, atualizando o stock de forma imediata e consistente.
+    • Proteção de Dados: Cumprir normas de privacidade, todos os dados das clientes são criptografados em repouso utilizando o AWS KMS. Além disso, o banco de dados reside numa Sub-rede Privada, sendo acessível apenas pelas instâncias da aplicação, nunca diretamente pela internet.
+    • Recuperação de Desastres: Caso ocorra um erro humano na base de dados, o recurso de Point-in-Time Recovery permite restaurar os dados para qualquer segundo nos últimos 35 dias.
+
+## Conclusão
+A implementação de ferramentas na empresa Varejo Pluz Size tem como esperado, o aumentar a eficiencia e a produtividade da empresa. Recomenda-se a continuidade da utilização das ferramentas implementadas e a busca por novas tecnologias que possam melhorar ainda mais os processos da empresa.
